@@ -1,8 +1,9 @@
 #include <iostream>
 
+using namespace std;
 int main()
 {
-	std::cout << "hello world";
-	std::cin.get();
+    cout << "hello world";
+	cin.get();
 	return 0;
 }
