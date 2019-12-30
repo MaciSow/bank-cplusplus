@@ -57,7 +57,19 @@ int main(int argc, char* argv[])
 		}
 
 		if (arg == "-wyciag") {
-			cout << "Podaj " << endl;
+			long long accountNumber;
+			
+			cout << "Podaj numer konta: ";
+			cin >> accountNumber;
+
+			Account user = userList.findUser(accountNumber);
+			
+			if (user.getAccountNumber() == 0) {
+				cout << "Nie znaleziono podanego konta\n";
+			}
+			else {
+				user.accountStatement();
+			}
 		}
 
 		if (arg == "-undo") {
