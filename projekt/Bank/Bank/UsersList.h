@@ -1,6 +1,9 @@
 #ifndef USERSLIST_H
 #define USERSLIST_H  
 
+#include <iostream>
+#include <string>
+#include <fstream>
 
 struct User
 {
@@ -57,43 +60,62 @@ struct UserList
 		}
 
 	}
+	Account findUser(long long accountNumber) {
+
+		User* tmp = uHead;
+		while (tmp)
+		{
+			if (tmp->account.getAccountNumber() == accountNumber) {
+				return tmp->account;
+			}
+			tmp = tmp->nextU;
+		}
+
+		Account emptyAccount;
+		return emptyAccount;
+	}
 };
 
-UserList readData() {
+UserList readData(string fileName) {
 
 	UserList list;
 
 	long long accountNumber;
 	string name, surname, stopTester;
 	double balance = 0, debit = 1000;
-	TransactionList transactions;
+
 
 	ifstream File;
-	File.open("../klienci.txt", ios::in);
+	File.open(fileName, ios::in);
 
 	if (!File.is_open()) {
 		cout << "Nie ma pliku" << endl;
 	}
 	else {
-		File >> accountNumber;
-		File >> name;
-		File >> surname;
-		File >> balance;
-		File >> debit;
-		while (File >> stopTester and stopTester.find('#') != 0)
+		while (!File.eof())
 		{
-			string date;
-			double amount;
-			date = stopTester; //#testschabowego
-			File >> amount;
-			transactions.addTransaction(date, amount);
+			TransactionList transactions;
+
+			File >> accountNumber;
+			File >> name;
+			File >> surname;
+			File >> balance;
+			File >> debit;
+
+			while (File >> stopTester and stopTester.find('#') != 0)
+			{
+				string date;
+				double amount;
+				date = stopTester; //#testschabowego
+				File >> amount;
+				transactions.addTransaction(date, amount);
+			}
+
+			Account user(accountNumber, name, surname, balance, debit, transactions);
+			list.addUser(user);
 		}
+
 		File.close();
-
-		Account user(accountNumber, name, surname, balance, debit, transactions);
-
-
-		list.addUser(user);
 	}
 
 	return list;

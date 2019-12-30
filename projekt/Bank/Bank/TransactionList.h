@@ -2,6 +2,7 @@
 #define TRANSACTIONLIST_H  
 
 #include <string>
+#include <iomanip>
 using namespace std;
 
 struct Transaction
@@ -62,7 +63,7 @@ struct TransactionList
             // przewijamy wskazniki na nastepne elementy
             while (temp)
             {
-                cout << "data: " << temp->date << " kwota: " << temp->amount << endl;
+                cout <<  "\tdata: " << temp->date << " kwota: " <<  formatAmount(temp->amount) << endl;
                 temp = temp->nextT;
             }
         
@@ -81,6 +82,18 @@ struct TransactionList
     TransactionList() {
 		tHead = 0;
 	}
+    
+    string formatAmount(double amount) {
+
+        string stringAmount;
+
+        amount = (floor(amount * 100) / 100);
+
+        stringAmount = to_string(amount);
+        stringAmount = stringAmount.substr(0, stringAmount.find(".") + 3);
+
+        return stringAmount;
+    }
 };
 
 #endif 
