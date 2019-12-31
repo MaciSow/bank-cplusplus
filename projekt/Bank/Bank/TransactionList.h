@@ -55,6 +55,64 @@ struct TransactionList
 		}
 	}
 
+	Transaction* findTransaction(string date, double amount) {
+		Transaction* tmp = tHead;
+
+		while (tmp)
+		{
+			if (date.substr(0, 10) == tmp->date.substr(0, 10) && amount == tmp->amount) {
+				return tmp;
+			}
+			tmp = tmp->nextT;
+		}
+		cout << "\nNie znaleziono transakcji\n";
+		return NULL;
+	}
+
+	void deleteTransakcion(Transaction*& transaction) {
+		// lista jednoelementowa
+		if (transaction->nextT == 0 && transaction == tHead) {
+			tHead = 0;
+			delete transaction;
+			return;
+		}
+
+		// jeœli jest pierwszym elementem na liœcie
+		if (transaction == tHead) {
+			tHead = transaction->nextT;
+			delete transaction;
+			return;
+		}
+
+		// jeœli jest ostatnim elementem na liœcie
+		if (transaction->nextT == 0) {
+			Transaction* tmp = tHead;
+
+			while (tmp) {
+				if (tmp->nextT == transaction)
+				{
+					tmp->nextT = 0;
+					delete transaction;
+					return;
+				}
+				tmp = tmp->nextT;
+			}
+		}
+
+		Transaction* tmp = tHead;
+
+		while (tmp) {
+			if (tmp->nextT == transaction)
+			{
+				tmp->nextT = transaction->nextT;
+				delete transaction;
+				return;
+			}
+			tmp = tmp->nextT;
+		}
+
+	}
+
 	void showTransactions() {
 
 		// wskaznik na pierszy element listy
@@ -69,7 +127,7 @@ struct TransactionList
 
 	}
 
-	void showOneTransaction(Transaction *transasaction) {
+	void showOneTransaction(Transaction* transasaction) {
 		cout << "\tdata: " << transasaction->date << " kwota: " << formatAmount(transasaction->amount) << endl;
 	}
 
@@ -99,18 +157,19 @@ struct TransactionList
 		return stringAmount;
 	}
 
-	
+
 
 	/* Bubble sort the given linked list */
-	void dateSort(struct Transaction* tHead)
+	void dateSort()
 	{
 		int swapped, i;
 		struct Transaction* ptr1;
 		struct Transaction* lptr = NULL;
 
 		/* Checking for empty list */
-		if (tHead == NULL)
+		if (tHead == NULL) {
 			return;
+		}
 
 		do
 		{
@@ -136,7 +195,7 @@ struct TransactionList
 		string tmpDate = a->date;
 		a->date = b->date;
 		b->date = tmpDate;
-		
+
 		double tmpAmount = a->amount;
 		a->amount = b->amount;
 		b->amount = tmpAmount;
@@ -171,7 +230,7 @@ struct TransactionList
 		if (youngDay > oldDay) {
 			return false;
 		}
-		
+
 		if (youngDay < oldDay) {
 			return true;
 		}

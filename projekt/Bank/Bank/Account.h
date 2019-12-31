@@ -102,10 +102,10 @@ public:
 			cout << "\nNiepoprawny zakres dat!!!\n";
 		}
 		else {
-			transactions.dateSort(transactions.tHead);
+			transactions.dateSort();
 			double withdrawalSum = 0, depositSum = 0;
 			Transaction* tmp = transactions.tHead;
-			
+
 			while (tmp)
 			{
 				if (checkDateInRange(tmp->date, startDate, stopDate)) {
@@ -152,6 +152,10 @@ public:
 		}
 
 		return year + "-" + month + "-" + day + "T" + hour + ":" + minute;
+	}
+
+	TransactionList getTransactions() {
+		return transactions;
 	}
 
 	bool checkDatesOrder(string youngDate, string oldDate) {

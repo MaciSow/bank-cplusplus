@@ -35,22 +35,22 @@ int main(int argc, char* argv[])
 			if (user.getAccountNumber() == 0) {
 				cout << "Nie znaleziono podanego konta\n";
 			}
-			else{
+			else {
 				user.withdrawal();
 			}
 			i++;
 		}
 
 		if (arg == "-we") {
-			string stringNumberAcc = argv[i + 1];
-			long long numberAcc = stoll(stringNumberAcc);
+			string stringAccountNumber = argv[i + 1];
+			long long accountNumber = stoll(stringAccountNumber);
 
-			Account user = userList.findUser(numberAcc);
+			Account user = userList.findUser(accountNumber);
 
 			if (user.getAccountNumber() == 0) {
 				cout << "Nie znaleziono podanego konta\n";
 			}
-			else{
+			else {
 				user.deposit();
 			}
 			i++;
@@ -58,12 +58,12 @@ int main(int argc, char* argv[])
 
 		if (arg == "-wyciag") {
 			long long accountNumber;
-			
+
 			cout << "Podaj numer konta: ";
 			cin >> accountNumber;
 
 			Account user = userList.findUser(accountNumber);
-			
+
 			if (user.getAccountNumber() == 0) {
 				cout << "Nie znaleziono podanego konta\n";
 			}
@@ -73,11 +73,27 @@ int main(int argc, char* argv[])
 		}
 
 		if (arg == "-undo") {
-			string numberAcc = argv[i + 1];
+			string stringAccountNumber = argv[i + 1];
 			string date = argv[i + 2];
-			string amount = argv[i + 3];
-			i = +3;
-			cout << "Cofnicie transakcji: " << numberAcc << " " << date << " " << amount << " " << endl;
+			string stringAmount = argv[i + 3];
+			long long accountNumber = stoll(stringAccountNumber);
+			double amount = stod(stringAmount);
+
+			Account user = userList.findUser(accountNumber);
+
+			if (user.getAccountNumber() == 0) {
+				cout << "Nie znaleziono podanego konta\n";
+			}
+			else {
+				Transaction* transaction = user.getTransactions().findTransaction(date,amount);
+				
+				if (transaction != NULL)
+				{
+					user.getTransactions().deleteTransakcion(transaction);
+				}		
+			}
+			i = +3;;
+			user.accountInfo();
 		}
 
 		if (arg == "-wywe") {
