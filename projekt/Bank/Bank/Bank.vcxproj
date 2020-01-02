@@ -152,7 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
-    <ClInclude Include="UsersList.h" />
+    <ClInclude Include="RaportList.h" />
+    <ClInclude Include="Tests.h" />
+    <ClInclude Include="AccountList.h" />
     <ClInclude Include="TransactionList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

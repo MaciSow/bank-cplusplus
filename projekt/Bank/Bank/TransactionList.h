@@ -161,8 +161,8 @@ struct TransactionList
 	void dateSort()
 	{
 		int swapped;
-		struct Transaction* ptr1;
-		struct Transaction* lptr = NULL;
+		Transaction* ptr1;
+		Transaction* lptr = NULL;
 
 		/* Checking for empty list */
 		if (tHead == NULL) {
@@ -188,7 +188,7 @@ struct TransactionList
 	}
 
 	/* function to swap data of two nodes a and b*/
-	void swap(struct Transaction* a, struct Transaction* b)
+	void swap(Transaction* a,Transaction* b)
 	{
 		string tmpDate = a->date;
 		a->date = b->date;
@@ -253,5 +253,4 @@ struct TransactionList
 		return true;
 	}
 };
-
 #endif 

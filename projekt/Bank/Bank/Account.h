@@ -18,9 +18,11 @@ struct Account
 	double balance = 0;
 	double debit = 1000;
 	TransactionList transactions;
+	Account* nextA;
 
-	Account() {
-	};
+	//Account() {
+	//	nextA = 0;
+	//};
 
 	Account(long long accountNumber, string name, string surname, double balance, double debit, TransactionList transactions) {
 		this->accountNumber = accountNumber;
@@ -29,6 +31,7 @@ struct Account
 		this->balance = balance;
 		this->debit = debit;
 		this->transactions = transactions;
+		nextA = 0;
 	}
 
 	void accountInfo() {
@@ -216,47 +219,10 @@ struct Account
 	}
 
 	bool checkDateInRange(string checkedDate, string startDate, string stopDate) {
-		unsigned checkedYear = stoi(checkedDate.substr(0, 4));
-		unsigned startYear = stoi(startDate.substr(0, 4));
-		unsigned stopYear = stoi(stopDate.substr(0, 4));
-
-		// jeœli rok jest poza przedzia³em - zwróæ false i zakoñcz
-		if (startYear > checkedYear || checkedYear > stopYear) {
-			return false;
-		}
-
-		// jeœli rok jest ró¿ny ale w przedziale - zwróæ true i zakoñcz 
-		if (startYear < checkedYear && checkedYear < stopYear) {
+		if (checkDatesOrder(startDate, checkedDate) && checkDatesOrder(checkedDate, stopDate)) {
 			return true;
 		}
-
-		// rok jest równy, sprawdŸ miesi¹ce
-		unsigned checkedMonth = stoi(checkedDate.substr(5, 2));
-		unsigned startMonth = stoi(startDate.substr(5, 2));
-		unsigned stopMonth = stoi(stopDate.substr(5, 2));
-
-		// jeœli miesi¹c jest poza przedzia³em - zwróæ false i zakoñcz
-		if (startMonth > checkedMonth || checkedMonth > stopMonth) {
-			return false;
-		}
-
-		// jeœli miesi¹c jest ró¿ny, ale w przedziale - zwróæ true i zakoñcz;
-		if (startMonth < checkedMonth && checkedMonth < stopMonth) {
-			return true;
-		}
-
-		// rok i miesi¹c jest równy, sprawdŸ dni 
-		unsigned checkedDay = stoi(checkedDate.substr(8, 2));
-		unsigned startDay = stoi(startDate.substr(8, 2));
-		unsigned stopDay = stoi(stopDate.substr(8, 2));
-
-		// jeœli dzieñ jest poza przedzia³em - zwróæ false i zakoñcz;
-		if (startDay > checkedDay || checkedDay > stopDay) {
-			return false;
-		}
-
-		// ostatnia mo¿liwoœæ - dzieñ jest w przedziale (mniejszy lub równy) 
-		return true;
+		return false;
 	}
 };
 #endif 

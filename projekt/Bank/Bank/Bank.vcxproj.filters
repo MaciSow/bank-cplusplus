@@ -29,7 +29,13 @@
     <ClInclude Include="TransactionList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UsersList.h">
+    <ClInclude Include="RaportList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AccountList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

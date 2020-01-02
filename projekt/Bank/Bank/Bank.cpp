@@ -3,14 +3,15 @@
 #include <string>
 
 #include "Account.h"
-#include "UsersList.h"
+#include "AccountList.h"
+#include "RaportList.h"
 
 using namespace std;
 
 
 int main(int argc, char* argv[])
 {
-	UserList userList;
+	AccountList accountList;
 
 	for (int i = 0; i < argc; i++)
 	{
@@ -22,7 +23,7 @@ int main(int argc, char* argv[])
 			cout << "Podaj nazwe pliku wejsciowego: ";
 			cin >> fileName;
 
-			userList = readData(fileName);
+			accountList = readData(fileName);
 			//	userList.showUsers();
 		}
 
@@ -30,10 +31,10 @@ int main(int argc, char* argv[])
 			string stringNumberAcc = argv[i + 1];
 			long long numberAcc = stoll(stringNumberAcc);
 
-			Account* user = userList.findUser(numberAcc);
+			Account* account = accountList.findAccount(numberAcc);
 
-			if (user) {
-				user->withdrawal();
+			if (account) {
+				account->withdrawal();
 			}
 			i++;
 		}
@@ -42,10 +43,10 @@ int main(int argc, char* argv[])
 			string stringAccountNumber = argv[i + 1];
 			long long accountNumber = stoll(stringAccountNumber);
 
-			Account* user = userList.findUser(accountNumber);
+			Account* account = accountList.findAccount(accountNumber);
 
-			if (user) {
-				user->deposit();
+			if (account) {
+				account->deposit();
 			}
 			i++;
 		}
@@ -56,10 +57,10 @@ int main(int argc, char* argv[])
 			cout << "Podaj numer konta: ";
 			cin >> accountNumber;
 
-			Account* user = userList.findUser(accountNumber);
+			Account* account = accountList.findAccount(accountNumber);
 
-			if (user) {
-				user->accountStatement();
+			if (account) {
+				account->accountStatement();
 			}
 		}
 
@@ -70,18 +71,18 @@ int main(int argc, char* argv[])
 			long long accountNumber = stoll(stringAccountNumber);
 			double amount = stod(stringAmount);
 
-			Account* user = userList.findUser(accountNumber);
+			Account* account = accountList.findAccount(accountNumber);
 
-			if (user) {
-				Transaction* transaction = user->getTransactions().findTransaction(date, amount);
+			if (account) {
+				Transaction* transaction = account->getTransactions().findTransaction(date, amount);
 
 				if (!transaction)
 				{
-					user->getTransactions().deleteTransakcion(transaction);
+					account->getTransactions().deleteTransakcion(transaction);
 				}
 			}
 			i = +3;
-			user->accountInfo();
+			account->accountInfo();
 		}
 
 		if (arg == "-wywe") {
@@ -90,24 +91,30 @@ int main(int argc, char* argv[])
 			cout << "Podaj nr konta z ktorego ma byc wyplacona gotowka: ";
 			cin >> accountNumber;
 
-			Account* sender = userList.findUser(accountNumber);
+			Account* sender = accountList.findAccount(accountNumber);
 
 			if (sender) {
 				cout << "Podaj nr konta odbiorcy: ";
 				cin >> accountNumber;
 
-				Account* receiver = userList.findUser(accountNumber);
+				Account* receiver = accountList.findAccount(accountNumber);
 
 				if (receiver) {
 					sender->transfer(receiver);
 				}
 
 			}
-			userList.showUsers();
+			accountList.showAccounts();
 		}
 
 		if (arg == "-rT") {
 			cout << "Raport wykonanych operacji" << endl;
+
+			RaportList raportT;
+			
+			raportT.raportTransactions(accountList);
+			
+			raportT.showRaport();
 		}
 
 		if (arg == "-rD") {
