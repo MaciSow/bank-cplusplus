@@ -30,13 +30,10 @@ int main(int argc, char* argv[])
 			string stringNumberAcc = argv[i + 1];
 			long long numberAcc = stoll(stringNumberAcc);
 
-			Account user = userList.findUser(numberAcc);
+			Account* user = userList.findUser(numberAcc);
 
-			if (user.getAccountNumber() == 0) {
-				cout << "Nie znaleziono podanego konta\n";
-			}
-			else {
-				user.withdrawal();
+			if (user) {
+				user->withdrawal();
 			}
 			i++;
 		}
@@ -45,13 +42,10 @@ int main(int argc, char* argv[])
 			string stringAccountNumber = argv[i + 1];
 			long long accountNumber = stoll(stringAccountNumber);
 
-			Account user = userList.findUser(accountNumber);
+			Account* user = userList.findUser(accountNumber);
 
-			if (user.getAccountNumber() == 0) {
-				cout << "Nie znaleziono podanego konta\n";
-			}
-			else {
-				user.deposit();
+			if (user) {
+				user->deposit();
 			}
 			i++;
 		}
@@ -62,13 +56,10 @@ int main(int argc, char* argv[])
 			cout << "Podaj numer konta: ";
 			cin >> accountNumber;
 
-			Account user = userList.findUser(accountNumber);
+			Account* user = userList.findUser(accountNumber);
 
-			if (user.getAccountNumber() == 0) {
-				cout << "Nie znaleziono podanego konta\n";
-			}
-			else {
-				user.accountStatement();
+			if (user) {
+				user->accountStatement();
 			}
 		}
 
@@ -79,25 +70,40 @@ int main(int argc, char* argv[])
 			long long accountNumber = stoll(stringAccountNumber);
 			double amount = stod(stringAmount);
 
-			Account user = userList.findUser(accountNumber);
+			Account* user = userList.findUser(accountNumber);
 
-			if (user.getAccountNumber() == 0) {
-				cout << "Nie znaleziono podanego konta\n";
-			}
-			else {
-				Transaction* transaction = user.getTransactions().findTransaction(date,amount);
-				
-				if (transaction != NULL)
+			if (user) {
+				Transaction* transaction = user->getTransactions().findTransaction(date, amount);
+
+				if (!transaction)
 				{
-					user.getTransactions().deleteTransakcion(transaction);
-				}		
+					user->getTransactions().deleteTransakcion(transaction);
+				}
 			}
-			i = +3;;
-			user.accountInfo();
+			i = +3;
+			user->accountInfo();
 		}
 
 		if (arg == "-wywe") {
-			cout << "Przelew z jednego konta na drugie" << endl;
+			long long accountNumber;
+
+			cout << "Podaj nr konta z ktorego ma byc wyplacona gotowka: ";
+			cin >> accountNumber;
+
+			Account* sender = userList.findUser(accountNumber);
+
+			if (sender) {
+				cout << "Podaj nr konta odbiorcy: ";
+				cin >> accountNumber;
+
+				Account* receiver = userList.findUser(accountNumber);
+
+				if (receiver) {
+					sender->transfer(receiver);
+				}
+
+			}
+			userList.showUsers();
 		}
 
 		if (arg == "-rT") {

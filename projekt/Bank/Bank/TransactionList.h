@@ -149,8 +149,6 @@ struct TransactionList
 
 		string stringAmount;
 
-		amount = (floor(amount * 100) / 100);
-
 		stringAmount = to_string(amount);
 		stringAmount = stringAmount.substr(0, stringAmount.find(".") + 3);
 
@@ -162,7 +160,7 @@ struct TransactionList
 	/* Bubble sort the given linked list */
 	void dateSort()
 	{
-		int swapped, i;
+		int swapped;
 		struct Transaction* ptr1;
 		struct Transaction* lptr = NULL;
 

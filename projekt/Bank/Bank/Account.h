@@ -10,9 +10,8 @@
 
 using namespace std;
 
-class Account
+struct Account
 {
-private:
 	long long accountNumber = 0;
 	string name = "";
 	string surname = "";
@@ -20,7 +19,6 @@ private:
 	double debit = 1000;
 	TransactionList transactions;
 
-public:
 	Account() {
 	};
 
@@ -42,15 +40,14 @@ public:
 		cout << endl;
 	}
 
-	long long getAccountNumber() {
-		return accountNumber;
-	}
 
 	void withdrawal() {
 		double amount;
 
-		cout << endl << "Kwota wyplaty: ";
-		cin >> amount;
+		cout << "\nKwota wyplaty: ";
+		cin >> amount;		
+
+		amount = roundAmount(amount);
 
 		if (amount <= 0) {
 			cout << "\nPodana kwota jest za mala!!!\n";
@@ -60,14 +57,8 @@ public:
 				cout << "\nBrak wystarczajacych srodkow na koncie\n";
 			}
 			else {
-				if (balance > amount) {
-					balance -= amount;
-				}
-				else
-				{
-					debit += (balance - amount);
-					balance = 0;
-				}
+				balance -= amount;
+
 				string currentDate = getCurrentDate();
 				transactions.addTransaction(currentDate, -amount);
 			}
@@ -78,7 +69,9 @@ public:
 		double amount;
 
 		cout << endl << "Kwota wplaty: ";
-		cin >> amount;
+		cin >> amount;	
+
+		amount = roundAmount(amount);
 
 		if (amount <= 0) {
 			cout << "\nPodana kwota jest za mala!!!\n";
@@ -87,6 +80,33 @@ public:
 			balance += amount;
 			string currentDate = getCurrentDate();
 			transactions.addTransaction(currentDate, amount);
+		}
+	}
+
+	void transfer(Account* receiver) {
+		double amount;
+
+		cout << "\nKwota wyplaty: ";
+		cin >> amount;		
+
+		amount = roundAmount(amount);
+
+		if (amount <= 0) {
+			cout << "\nPodana kwota jest za mala!!!\n";
+		}
+		else {
+			if ((balance + debit) < amount) {
+				cout << "\nBrak wystarczajacych srodkow na koncie\n";
+			}
+			else {
+				balance -= amount;
+
+				string currentDate = getCurrentDate();
+				transactions.addTransaction(currentDate, -amount);
+
+				receiver->balance += amount;
+				receiver->transactions.addTransaction(currentDate, amount);
+			}
 		}
 	}
 
@@ -156,6 +176,10 @@ public:
 
 	TransactionList getTransactions() {
 		return transactions;
+	}
+
+	double roundAmount(double amount) {
+		return(floor(amount * 100) / 100);
 	}
 
 	bool checkDatesOrder(string youngDate, string oldDate) {

@@ -7,14 +7,14 @@
 
 struct User
 {
-	Account account;
+	Account *account;
 	User* nextU;
 
 	User() {
 		nextU = 0;
 	}
 
-	User(Account acc) {
+	User(Account *acc) {
 		account = acc;
 		nextU = 0;
 	}
@@ -29,7 +29,7 @@ struct UserList
 		uHead = 0;
 	}
 
-	void addUser(Account account) {
+	void addUser(Account *account) {
 		User* newUser = new User;
 
 		newUser->account = account;
@@ -55,24 +55,24 @@ struct UserList
 
 		while (currentItem)
 		{
-			currentItem->account.accountInfo();
+			currentItem->account->accountInfo();
 			currentItem = currentItem->nextU;
 		}
 
 	}
-	Account findUser(long long accountNumber) {
+	
+	Account* findUser(long long accountNumber) {
 
 		User* tmp = uHead;
 		while (tmp)
 		{
-			if (tmp->account.getAccountNumber() == accountNumber) {
+			if (tmp->account->accountNumber == accountNumber) {
 				return tmp->account;
 			}
 			tmp = tmp->nextU;
 		}
-
-		Account emptyAccount;
-		return emptyAccount;
+		cout << "Nie znaleziono podanego konta\n";
+		return NULL;
 	}
 };
 
@@ -111,7 +111,7 @@ UserList readData(string fileName) {
 				transactions.addTransaction(date, amount);
 			}
 
-			Account user(accountNumber, name, surname, balance, debit, transactions);
+			Account *user = new Account(accountNumber, name, surname, balance, debit, transactions);
 			list.addUser(user);
 		}
 
