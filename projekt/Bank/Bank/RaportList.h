@@ -72,8 +72,8 @@ struct RaportList
 	}
 
 
-	void raportTransactions(AccountList list) {
-		Account* currentAccount = list.aHead;
+	void raportTransactions(AccountList*list) {
+		Account* currentAccount = list->aHead;
 		string startDate, stopDate;
 
 
@@ -112,8 +112,8 @@ struct RaportList
 		showRaportTransaction();
 	}
 
-	void raportDebitUsers(AccountList list) {
-		Account* currentAccount = list.aHead;
+	void raportDebitUsers(AccountList*list) {
+		Account* currentAccount = list->aHead;
 		while (currentAccount) {
 			if (currentAccount->balance < 0) {
 				addItem(new RaportItem(currentAccount->accountNumber, currentAccount->surname));
@@ -289,7 +289,7 @@ struct RaportList
 	}
 
 	string strinfToLower(string word) {
-		for (int i = 0; i < word.length(); i++)
+		for (unsigned int i = 0; i < word.length(); i++)
 		{
 			word[i] = tolower(word[i]);
 		}

@@ -20,9 +20,9 @@ struct Account
 	TransactionList transactions;
 	Account* nextA;
 
-	//Account() {
-	//	nextA = 0;
-	//};
+	Account() {
+		nextA = 0;
+	};
 
 	Account(long long accountNumber, string name, string surname, double balance, double debit, TransactionList transactions) {
 		this->accountNumber = accountNumber;

@@ -149,10 +149,12 @@ struct TransactionList
 
 		string stringAmount;
 
+		string sign = amount > 0 ? "+" : "";
+
 		stringAmount = to_string(amount);
 		stringAmount = stringAmount.substr(0, stringAmount.find(".") + 3);
 
-		return stringAmount;
+		return sign + stringAmount;
 	}
 
 
@@ -188,7 +190,7 @@ struct TransactionList
 	}
 
 	/* function to swap data of two nodes a and b*/
-	void swap(Transaction* a,Transaction* b)
+	void swap(Transaction* a, Transaction* b)
 	{
 		string tmpDate = a->date;
 		a->date = b->date;

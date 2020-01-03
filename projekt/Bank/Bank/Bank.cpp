@@ -11,7 +11,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	AccountList accountList;
+	AccountList*accountList = new AccountList();
 
 	for (int i = 0; i < argc; i++)
 	{
@@ -23,15 +23,14 @@ int main(int argc, char* argv[])
 			cout << "Podaj nazwe pliku wejsciowego: ";
 			cin >> fileName;
 
-			accountList = readData(fileName);
-			//	userList.showUsers();
+			accountList->readData(fileName);
 		}
 
 		if (arg == "-wy") {
 			string stringNumberAcc = argv[i + 1];
 			long long numberAcc = stoll(stringNumberAcc);
 
-			Account* account = accountList.findAccount(numberAcc);
+			Account* account = accountList->findAccount(numberAcc);
 
 			if (account) {
 				account->withdrawal();
@@ -43,7 +42,7 @@ int main(int argc, char* argv[])
 			string stringAccountNumber = argv[i + 1];
 			long long accountNumber = stoll(stringAccountNumber);
 
-			Account* account = accountList.findAccount(accountNumber);
+			Account* account = accountList->findAccount(accountNumber);
 
 			if (account) {
 				account->deposit();
@@ -57,7 +56,7 @@ int main(int argc, char* argv[])
 			cout << "Podaj numer konta: ";
 			cin >> accountNumber;
 
-			Account* account = accountList.findAccount(accountNumber);
+			Account* account = accountList->findAccount(accountNumber);
 
 			if (account) {
 				account->accountStatement();
@@ -71,7 +70,7 @@ int main(int argc, char* argv[])
 			long long accountNumber = stoll(stringAccountNumber);
 			double amount = stod(stringAmount);
 
-			Account* account = accountList.findAccount(accountNumber);
+			Account* account = accountList->findAccount(accountNumber);
 
 			if (account) {
 				Transaction* transaction = account->getTransactions().findTransaction(date, amount);
@@ -91,20 +90,19 @@ int main(int argc, char* argv[])
 			cout << "Podaj nr konta z ktorego ma byc wyplacona gotowka: ";
 			cin >> accountNumber;
 
-			Account* sender = accountList.findAccount(accountNumber);
+			Account* sender = accountList->findAccount(accountNumber);
 
 			if (sender) {
 				cout << "Podaj nr konta odbiorcy: ";
 				cin >> accountNumber;
 
-				Account* receiver = accountList.findAccount(accountNumber);
+				Account* receiver = accountList->findAccount(accountNumber);
 
 				if (receiver) {
 					sender->transfer(receiver);
 				}
 
 			}
-			accountList.showAccounts();
 		}
 
 		if (arg == "-rT") {
@@ -124,16 +122,6 @@ int main(int argc, char* argv[])
 		}
 	}
 
-
-
-	/*userlist list = readdata();
-	list.showusers();*/
-	//Account acc = readData();
-	//user user1(acc);
-
-	//user1.print();
-
-	//cin.get();
-   // _CrtDumpMemoryLeaks();
+	accountList->saveData();
 	return 0;
 }

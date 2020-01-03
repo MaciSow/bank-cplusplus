@@ -9,12 +9,14 @@
 struct AccountList
 {
 	Account* aHead;
+	string fileName = "";
+	string separator = "########################################";
 
 	AccountList() {
 		aHead = 0;
 	}
 
-	void addAccount(Account *account) {
+	void addAccount(Account* account) {
 
 		if (aHead == 0) {
 			aHead = account;
@@ -33,16 +35,16 @@ struct AccountList
 	}
 
 	void showAccounts() {
-		Account* currentItem = aHead;
+		Account* currentAccount = aHead;
 
-		while (currentItem)
+		while (currentAccount)
 		{
-			currentItem->accountInfo();
-			currentItem = currentItem->nextA;
+			currentAccount->accountInfo();
+			currentAccount = currentAccount->nextA;
 		}
 
 	}
-	
+
 	Account* findAccount(long long accountNumber) {
 
 		Account* tmp = aHead;
@@ -56,51 +58,84 @@ struct AccountList
 		cout << "Nie znaleziono podanego konta\n";
 		return NULL;
 	}
-};
-
-AccountList readData(string fileName) {
-
-	AccountList list;
-
-	long long accountNumber;
-	string name, surname, stopTester;
-	double balance = 0, debit = 1000;
 
 
-	ifstream File;
-	File.open(fileName, ios::in);
+	void readData(string fileName) {
 
-	if (!File.is_open()) {
-		cout << "Nie ma pliku" << endl;
-	}
-	else {
-		while (!File.eof())
-		{
-			TransactionList transactions;
+		this->fileName = fileName;
 
-			File >> accountNumber;
-			File >> name;
-			File >> surname;
-			File >> balance;
-			File >> debit;
+		ifstream File;
+		File.open(fileName, ios::in);
 
-			while (File >> stopTester and stopTester.find('#') != 0)
+		if (!File.is_open()) {
+			cout << "Nie ma pliku" << endl;
+		}
+		else {
+			while (!File.eof())
 			{
-				string date;
-				double amount;
-				date = stopTester; //#testschabowego
-				File >> amount;
-				transactions.addTransaction(date, amount);
+				long long accountNumber = 0;
+				string name, surname, stopTester;
+				double balance = 0, debit = 1000;
+				TransactionList transactions;
+
+				File >> accountNumber;
+				File >> name;
+				File >> surname;
+				File >> balance;
+				File >> debit;
+
+				while (File >> stopTester and stopTester.find("#") != 0)
+				{
+					string date;
+					double amount;
+					date = stopTester; //#testschabowego
+					File >> amount;
+					transactions.addTransaction(date, amount);
+				}
+				
+				if (accountNumber)
+				{
+					Account* account = new Account(accountNumber, name, surname, balance, debit, transactions);
+					addAccount(account);
+				}
+			}
+			File.close();
+		}
+	}
+
+	void saveData() {
+		ofstream File(fileName);
+		if (File.is_open())
+		{
+			//File << "Kotlet\n";
+			//File << "Schabowy\n";
+			Account* currentAccount = aHead;
+
+			while (currentAccount)
+			{
+				File << currentAccount->accountNumber << " ";
+				File << currentAccount->name << " ";
+				File << currentAccount->surname << " ";
+				File << currentAccount->transactions.formatAmount(currentAccount->balance) << " ";
+				File << currentAccount->debit << endl;
+
+				Transaction* temp = currentAccount->transactions.tHead;
+
+				while (temp)
+				{
+					File << temp->date << " " << currentAccount->transactions.formatAmount(temp->amount) << endl;
+					temp = temp->nextT;
+				}
+
+				File << separator << endl;
+				currentAccount = currentAccount->nextA;
 			}
 
-			Account *account = new Account(accountNumber, name, surname, balance, debit, transactions);
-			list.addAccount(account);
+			File.close();
 		}
-
-		File.close();
+		else {
+			cout << "Blad zapisu pliku";
+		}
 	}
-
-	return list;
-
-}
+};
 #endif
