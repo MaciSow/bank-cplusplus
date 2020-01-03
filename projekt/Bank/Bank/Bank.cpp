@@ -108,17 +108,19 @@ int main(int argc, char* argv[])
 		}
 
 		if (arg == "-rT") {
-			cout << "Raport wykonanych operacji" << endl;
+			cout << "Raport wykonanych operacji\n";
 
 			RaportList raportT;
 			
-			raportT.raportTransactions(accountList);
-			
-			raportT.showRaport();
+			raportT.raportTransactions(accountList);			
 		}
 
 		if (arg == "-rD") {
-			cout << "Raport uzytkownikow" << endl;
+			cout << "Raport uzytkownikow\n";
+			
+			RaportList raportD;
+			
+			raportD.raportDebitUsers(accountList);
 		}
 	}
 

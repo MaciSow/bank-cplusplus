@@ -10,10 +10,16 @@ struct RaportItem
 	string date, surname = "";
 
 
-	RaportItem(long long acc, string date, double amount) {
-		accountNumber = acc;
+	RaportItem(long long accountNumber, string date, double amount) {
+		this->accountNumber = accountNumber;
 		this->amount = amount;
 		this->date = date;
+		nextR = 0;
+	}
+
+	RaportItem(long long accountNumber, string surname) {
+		this->accountNumber = accountNumber;
+		this->surname = surname;
 		nextR = 0;
 	}
 };
@@ -44,7 +50,7 @@ struct RaportList
 		}
 	}
 
-	void showRaport() {
+	void showRaportTransaction() {
 		RaportItem* item = rHead;
 
 		while (item)
@@ -54,6 +60,17 @@ struct RaportList
 		}
 
 	}
+
+	void showRaportDebit() {
+		RaportItem* item = rHead;
+
+		while (item)
+		{
+			cout << item->accountNumber << "\t" << item->surname << endl;
+			item = item->nextR;
+		}
+	}
+
 
 	void raportTransactions(AccountList list) {
 		Account* currentAccount = list.aHead;
@@ -90,10 +107,30 @@ struct RaportList
 		cout << "Wybierz typ sortowania wedlug:\n"
 			<< "1 - daty\n" << "2 - kwot\n" << "3 - numerow kont\n";
 		cin >> sortType;
-		sortRaport(sortType);
+		sortRaportTransaction(sortType);
+
+		showRaportTransaction();
 	}
 
-	void sortRaport(int sortType) {
+	void raportDebitUsers(AccountList list) {
+		Account* currentAccount = list.aHead;
+		while (currentAccount) {
+			if (currentAccount->balance < 0) {
+				addItem(new RaportItem(currentAccount->accountNumber, currentAccount->surname));
+			}
+			currentAccount = currentAccount->nextA;
+		}
+
+		int sortType;
+		cout << "Wybierz typ sortowania wedlug:\n"
+			<< "1 - nazwisk\n" << "2 - numerow kont\n";
+		cin >> sortType;
+		sortRaportDebit(sortType);
+
+		showRaportDebit();
+	}
+
+	void sortRaportTransaction(int sortType) {
 
 		if (rHead == NULL) {
 			return;
@@ -115,6 +152,24 @@ struct RaportList
 		}
 	}
 
+	void sortRaportDebit(int sortType) {
+
+		if (rHead == NULL) {
+			return;
+		}
+
+		switch (sortType) {
+		case 1:
+			sortBySurname();
+			break;
+		case 2:
+			sortByAccount();
+			break;
+		default:
+			cout << "Sortowanie nieaktywne\n";
+			break;
+		}
+	}
 
 	void sortByDate() {
 		int swapped;
@@ -155,10 +210,10 @@ struct RaportList
 					swap(ptr1, ptr1->nextR);
 					swapped = 1;
 				}
-				
+
 				ptr1 = ptr1->nextR;
 			}
-			
+
 			lptr = ptr1;
 		} while (swapped);
 	}
@@ -179,10 +234,34 @@ struct RaportList
 					swap(ptr1, ptr1->nextR);
 					swapped = 1;
 				}
-				
+
 				ptr1 = ptr1->nextR;
 			}
-			
+
+			lptr = ptr1;
+		} while (swapped);
+	}
+
+	void sortBySurname() {
+		int swapped;
+		RaportItem* ptr1;
+		RaportItem* lptr = NULL;
+
+		do
+		{
+			swapped = 0;
+			ptr1 = rHead;
+
+			while (ptr1->nextR != lptr)
+			{
+				if (strinfToLower(ptr1->surname) > strinfToLower(ptr1->nextR->surname)) {
+					swap(ptr1, ptr1->nextR);
+					swapped = 1;
+				}
+
+				ptr1 = ptr1->nextR;
+			}
+
 			lptr = ptr1;
 		} while (swapped);
 	}
@@ -207,6 +286,14 @@ struct RaportList
 		a->amount = b->amount;
 		b->amount = tmpAmount;
 
+	}
+
+	string strinfToLower(string word) {
+		for (int i = 0; i < word.length(); i++)
+		{
+			word[i] = tolower(word[i]);
+		}
+		return word;
 	}
 
 	bool checkDatesOrder(string youngDate, string oldDate) {
