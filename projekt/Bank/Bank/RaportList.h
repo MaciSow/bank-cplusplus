@@ -55,7 +55,7 @@ struct RaportList
 
 		while (item)
 		{
-			cout << item->accountNumber << "\t" << item->date << "\t" << item->amount << endl;
+			cout << item->accountNumber << "\t" << item->date << "\t" << formatAmount(item->amount) << endl;
 			item = item->nextR;
 		}
 
@@ -71,6 +71,18 @@ struct RaportList
 		}
 	}
 
+	void deleteRaportList() {
+		RaportItem* item = rHead;
+
+		while (item)
+		{
+			RaportItem* tmpItem = item->nextR;
+			delete item;
+			item = tmpItem;
+		}
+
+		//delete this;
+	}
 
 	void raportTransactions(AccountList*list) {
 		Account* currentAccount = list->aHead;
@@ -79,7 +91,7 @@ struct RaportList
 
 		cout << "Podaj date poczatkowa: ";
 		cin >> startDate;
-		cout << "\nPodaj date koncowa: ";
+		cout << "Podaj date koncowa: ";
 		cin >> stopDate;
 
 		if (!currentAccount->checkDatesOrder(startDate, stopDate)) {
@@ -87,7 +99,7 @@ struct RaportList
 		}
 
 		while (currentAccount) {
-			Transaction* currentItem = currentAccount->transactions.tHead;
+			Transaction* currentItem = currentAccount->transactions->tHead;
 
 			while (currentItem) {
 				string date = currentItem->date;
@@ -286,6 +298,20 @@ struct RaportList
 		a->amount = b->amount;
 		b->amount = tmpAmount;
 
+	}
+
+	string formatAmount(double amount) {
+
+		amount=(floor(amount * 100) / 100);
+		
+		string stringAmount;
+
+		string sign = amount > 0 ? "+" : "";
+
+		stringAmount = to_string(amount);
+		stringAmount = stringAmount.substr(0, stringAmount.find(".") + 3);
+
+		return sign + stringAmount;
 	}
 
 	string strinfToLower(string word) {

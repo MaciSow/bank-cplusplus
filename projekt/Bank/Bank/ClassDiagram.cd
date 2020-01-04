@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Struct Name="Account">
+    <Position X="7.5" Y="0.5" Width="8" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAYAABAAAAUCAAIAAEECAAICAEEAgAAgEA=</HashCode>
+      <FileName>Account.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="AccountList">
+    <Position X="0.5" Y="0.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAEAAAEAAAAACBAAAAAAEAAAAAIAAEAAAAIAAAA=</HashCode>
+      <FileName>AccountList.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RaportItem">
+    <Position X="10" Y="7" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAECAAAAAAAgAAAAAAAAQAAAAI=</HashCode>
+      <FileName>RaportList.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RaportList">
+    <Position X="3.75" Y="7" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAgwAAAAQAAAAAAACEAAAUAQAACAAICQAIAEAAAAA=</HashCode>
+      <FileName>RaportList.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Transaction">
+    <Position X="22.5" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAgAAACAAAAQAgAAA=</HashCode>
+      <FileName>TransactionList.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TransactionList">
+    <Position X="17.25" Y="0.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIACAQAgAAAAAIAAAAYAAAAEAACAAAAQAAAABAAQA=</HashCode>
+      <FileName>TransactionList.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

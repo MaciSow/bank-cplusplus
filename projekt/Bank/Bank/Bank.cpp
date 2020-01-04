@@ -11,6 +11,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	AccountList*accountList = new AccountList();
 
 	for (int i = 0; i < argc; i++)
@@ -73,15 +74,14 @@ int main(int argc, char* argv[])
 			Account* account = accountList->findAccount(accountNumber);
 
 			if (account) {
-				Transaction* transaction = account->getTransactions().findTransaction(date, amount);
+				Transaction* transaction = account->transactions->findTransaction(date, amount);
 
-				if (!transaction)
+				if (transaction != NULL)
 				{
-					account->getTransactions().deleteTransakcion(transaction);
+					account->transactions->deleteTransakcion(transaction);
 				}
 			}
 			i = +3;
-			account->accountInfo();
 		}
 
 		if (arg == "-wywe") {
@@ -108,20 +108,30 @@ int main(int argc, char* argv[])
 		if (arg == "-rT") {
 			cout << "Raport wykonanych operacji\n";
 
-			RaportList raportT;
+			RaportList *raportList = new RaportList();
 			
-			raportT.raportTransactions(accountList);			
+			raportList->raportTransactions(accountList);
+
+			raportList->deleteRaportList();
+			delete raportList;
 		}
 
 		if (arg == "-rD") {
 			cout << "Raport uzytkownikow\n";
 			
-			RaportList raportD;
+			RaportList* raportList = new RaportList();
 			
-			raportD.raportDebitUsers(accountList);
+			raportList->raportDebitUsers(accountList);
+
+			raportList->deleteRaportList();
+			delete raportList;
 		}
 	}
 
 	accountList->saveData();
+	
+	accountList->deleteAll();
+	delete accountList;
+	
 	return 0;
 }

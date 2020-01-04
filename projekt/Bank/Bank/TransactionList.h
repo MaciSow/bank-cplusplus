@@ -25,6 +25,10 @@ struct TransactionList
 {
 	Transaction* tHead;
 
+	TransactionList() {
+		tHead = 0;
+	}
+
 	void addTransaction(string date, double amount)
 	{
 		Transaction* newTrans = new Transaction;    // tworzy nowy element listy
@@ -53,6 +57,8 @@ struct TransactionList
 			tmp->nextT = newTrans;  // ostatni element wskazuje na nasz nowy
 			newTrans->nextT = 0;     // ostatni nie wskazuje na nic
 		}
+
+
 	}
 
 	Transaction* findTransaction(string date, double amount) {
@@ -69,7 +75,8 @@ struct TransactionList
 		return NULL;
 	}
 
-	void deleteTransakcion(Transaction*& transaction) {
+	void deleteTransakcion(Transaction* transaction) {
+		
 		// lista jednoelementowa
 		if (transaction->nextT == 0 && transaction == tHead) {
 			tHead = 0;
@@ -141,9 +148,7 @@ struct TransactionList
 		}
 	}
 
-	TransactionList() {
-		tHead = 0;
-	}
+
 
 	string formatAmount(double amount) {
 

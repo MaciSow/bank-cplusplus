@@ -17,14 +17,14 @@ struct Account
 	string surname = "";
 	double balance = 0;
 	double debit = 1000;
-	TransactionList transactions;
+	TransactionList* transactions;
 	Account* nextA;
 
 	Account() {
 		nextA = 0;
 	};
 
-	Account(long long accountNumber, string name, string surname, double balance, double debit, TransactionList transactions) {
+	Account(long long accountNumber, string name, string surname, double balance, double debit, TransactionList*& transactions) {
 		this->accountNumber = accountNumber;
 		this->name = name;
 		this->surname = surname;
@@ -39,7 +39,7 @@ struct Account
 			<< "User: " << name << " " << surname << endl
 			<< "Balance: " << (balance + debit) << endl
 			<< "Tranasctions:\n";
-		transactions.showTransactions();
+		transactions->showTransactions();
 		cout << endl;
 	}
 
@@ -47,8 +47,8 @@ struct Account
 	void withdrawal() {
 		double amount;
 
-		cout << "\nKwota wyplaty: ";
-		cin >> amount;		
+		cout << "Kwota wyplaty: ";
+		cin >> amount;
 
 		amount = roundAmount(amount);
 
@@ -63,7 +63,7 @@ struct Account
 				balance -= amount;
 
 				string currentDate = getCurrentDate();
-				transactions.addTransaction(currentDate, -amount);
+				transactions->addTransaction(currentDate, -amount);
 			}
 		}
 	}
@@ -71,8 +71,8 @@ struct Account
 	void deposit() {
 		double amount;
 
-		cout << endl << "Kwota wplaty: ";
-		cin >> amount;	
+		cout << "Kwota wplaty: ";
+		cin >> amount;
 
 		amount = roundAmount(amount);
 
@@ -82,15 +82,15 @@ struct Account
 		else {
 			balance += amount;
 			string currentDate = getCurrentDate();
-			transactions.addTransaction(currentDate, amount);
+			transactions->addTransaction(currentDate, amount);
 		}
 	}
 
 	void transfer(Account* receiver) {
 		double amount;
 
-		cout << "\nKwota wyplaty: ";
-		cin >> amount;		
+		cout << "Kwota wyplaty: ";
+		cin >> amount;
 
 		amount = roundAmount(amount);
 
@@ -105,10 +105,10 @@ struct Account
 				balance -= amount;
 
 				string currentDate = getCurrentDate();
-				transactions.addTransaction(currentDate, -amount);
+				transactions->addTransaction(currentDate, -amount);
 
 				receiver->balance += amount;
-				receiver->transactions.addTransaction(currentDate, amount);
+				receiver->transactions->addTransaction(currentDate, amount);
 			}
 		}
 	}
@@ -118,22 +118,22 @@ struct Account
 
 		cout << "Podaj date poczatkowa: ";
 		cin >> startDate;
-		cout << "\nPodaj date koncowa: ";
+		cout << "Podaj date koncowa: ";
 		cin >> stopDate;
 
 		if (!checkDatesOrder(startDate, stopDate)) {
 			cout << "\nNiepoprawny zakres dat!!!\n";
 		}
 		else {
-			transactions.dateSort();
+			transactions->dateSort();
 			double withdrawalSum = 0, depositSum = 0;
-			Transaction* tmp = transactions.tHead;
+			Transaction* tmp = transactions->tHead;
 
 			while (tmp)
 			{
 				if (checkDateInRange(tmp->date, startDate, stopDate)) {
 					(tmp->amount < 0) ? withdrawalSum += tmp->amount : depositSum += tmp->amount;
-					transactions.showOneTransaction(tmp);
+					transactions->showOneTransaction(tmp);
 				}
 				tmp = tmp->nextT;
 			}
@@ -144,7 +144,7 @@ struct Account
 	}
 
 	void deleteTransactionList() {
-		transactions.deleteList();
+		transactions->deleteList();
 	}
 
 	string getCurrentDate() {
@@ -173,13 +173,9 @@ struct Account
 		if (newtime.tm_min <= 9) {
 			minute = "0" + minute;
 		}
-
 		return year + "-" + month + "-" + day + "T" + hour + ":" + minute;
 	}
 
-	TransactionList getTransactions() {
-		return transactions;
-	}
 
 	double roundAmount(double amount) {
 		return(floor(amount * 100) / 100);

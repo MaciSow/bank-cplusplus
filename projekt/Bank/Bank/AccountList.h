@@ -76,25 +76,26 @@ struct AccountList
 				long long accountNumber = 0;
 				string name, surname, stopTester;
 				double balance = 0, debit = 1000;
-				TransactionList transactions;
 
 				File >> accountNumber;
-				File >> name;
-				File >> surname;
-				File >> balance;
-				File >> debit;
 
-				while (File >> stopTester and stopTester.find("#") != 0)
-				{
-					string date;
-					double amount;
-					date = stopTester; //#testschabowego
-					File >> amount;
-					transactions.addTransaction(date, amount);
-				}
-				
 				if (accountNumber)
 				{
+					TransactionList* transactions = new TransactionList;
+					File >> name;
+					File >> surname;
+					File >> balance;
+					File >> debit;
+
+					while (File >> stopTester and stopTester.find("#") != 0)
+					{
+						string date;
+						double amount;
+						date = stopTester; //#testschabowego
+						File >> amount;
+						transactions->addTransaction(date, amount);
+					}
+
 					Account* account = new Account(accountNumber, name, surname, balance, debit, transactions);
 					addAccount(account);
 				}
@@ -116,14 +117,14 @@ struct AccountList
 				File << currentAccount->accountNumber << " ";
 				File << currentAccount->name << " ";
 				File << currentAccount->surname << " ";
-				File << currentAccount->transactions.formatAmount(currentAccount->balance) << " ";
+				File << currentAccount->transactions->formatAmount(currentAccount->balance) << " ";
 				File << currentAccount->debit << endl;
 
-				Transaction* temp = currentAccount->transactions.tHead;
+				Transaction* temp = currentAccount->transactions->tHead;
 
 				while (temp)
 				{
-					File << temp->date << " " << currentAccount->transactions.formatAmount(temp->amount) << endl;
+					File << temp->date << " " << currentAccount->transactions->formatAmount(temp->amount) << endl;
 					temp = temp->nextT;
 				}
 
@@ -135,6 +136,28 @@ struct AccountList
 		}
 		else {
 			cout << "Blad zapisu pliku";
+		}
+	}
+
+	void deleteAll() {
+		Account* currentAccount = aHead;
+
+		while (currentAccount) {
+
+			Transaction* currentTransaction = currentAccount->transactions->tHead;
+
+			while (currentTransaction) {
+				Transaction* tmpTransaction = currentTransaction->nextT;
+				delete currentTransaction;
+				currentTransaction = tmpTransaction;
+			}
+
+			delete currentAccount->transactions;
+			Account* tmpAccount = currentAccount->nextA;
+			delete currentAccount;
+			currentAccount = tmpAccount;
+
+
 		}
 	}
 };
