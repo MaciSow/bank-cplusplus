@@ -112,7 +112,6 @@ int main(int argc, char* argv[])
 			
 			raportList->raportTransactions(accountList);
 
-			raportList->deleteRaportList();
 			delete raportList;
 		}
 
@@ -123,14 +122,12 @@ int main(int argc, char* argv[])
 			
 			raportList->raportDebitUsers(accountList);
 
-			raportList->deleteRaportList();
 			delete raportList;
 		}
 	}
 
 	accountList->saveData();
 	
-	accountList->deleteAll();
 	delete accountList;
 	
 	return 0;

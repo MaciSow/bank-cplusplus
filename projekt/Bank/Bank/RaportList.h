@@ -32,6 +32,15 @@ struct RaportList
 		rHead = 0;
 	}
 
+	~RaportList() {
+		while (rHead)
+		{
+			RaportItem* tmpItem = rHead->nextR;
+			delete rHead;
+			rHead = tmpItem;
+		}
+	}
+
 	void addItem(RaportItem* item) {
 
 		if (rHead == 0) {
@@ -69,19 +78,6 @@ struct RaportList
 			cout << item->accountNumber << "\t" << item->surname << endl;
 			item = item->nextR;
 		}
-	}
-
-	void deleteRaportList() {
-		RaportItem* item = rHead;
-
-		while (item)
-		{
-			RaportItem* tmpItem = item->nextR;
-			delete item;
-			item = tmpItem;
-		}
-
-		//delete this;
 	}
 
 	void raportTransactions(AccountList*list) {
@@ -277,8 +273,6 @@ struct RaportList
 			lptr = ptr1;
 		} while (swapped);
 	}
-
-
 
 	void swap(RaportItem* a, RaportItem* b)
 	{

@@ -29,6 +29,14 @@ struct TransactionList
 		tHead = 0;
 	}
 
+	~TransactionList() {
+		while (tHead) {
+			Transaction* tmpTransaction = tHead->nextT;
+			delete tHead;
+			tHead = tmpTransaction;
+		}
+	}
+
 	void addTransaction(string date, double amount)
 	{
 		Transaction* newTrans = new Transaction;    // tworzy nowy element listy
@@ -76,7 +84,7 @@ struct TransactionList
 	}
 
 	void deleteTransakcion(Transaction* transaction) {
-		
+
 		// lista jednoelementowa
 		if (transaction->nextT == 0 && transaction == tHead) {
 			tHead = 0;
@@ -148,8 +156,6 @@ struct TransactionList
 		}
 	}
 
-
-
 	string formatAmount(double amount) {
 
 		string stringAmount;
@@ -161,8 +167,6 @@ struct TransactionList
 
 		return sign + stringAmount;
 	}
-
-
 
 	/* Bubble sort the given linked list */
 	void dateSort()

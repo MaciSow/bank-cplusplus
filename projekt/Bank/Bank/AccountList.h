@@ -16,6 +16,15 @@ struct AccountList
 		aHead = 0;
 	}
 
+	~AccountList() {
+
+		while (aHead) {
+			Account* tmpAccount = aHead->nextA;
+			delete aHead;
+			aHead = tmpAccount;
+		}
+	}
+
 	void addAccount(Account* account) {
 
 		if (aHead == 0) {
@@ -58,7 +67,6 @@ struct AccountList
 		cout << "Nie znaleziono podanego konta\n";
 		return NULL;
 	}
-
 
 	void readData(string fileName) {
 
@@ -136,28 +144,6 @@ struct AccountList
 		}
 		else {
 			cout << "Blad zapisu pliku";
-		}
-	}
-
-	void deleteAll() {
-		Account* currentAccount = aHead;
-
-		while (currentAccount) {
-
-			Transaction* currentTransaction = currentAccount->transactions->tHead;
-
-			while (currentTransaction) {
-				Transaction* tmpTransaction = currentTransaction->nextT;
-				delete currentTransaction;
-				currentTransaction = tmpTransaction;
-			}
-
-			delete currentAccount->transactions;
-			Account* tmpAccount = currentAccount->nextA;
-			delete currentAccount;
-			currentAccount = tmpAccount;
-
-
 		}
 	}
 };

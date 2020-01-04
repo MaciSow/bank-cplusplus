@@ -20,10 +20,6 @@ struct Account
 	TransactionList* transactions;
 	Account* nextA;
 
-	Account() {
-		nextA = 0;
-	};
-
 	Account(long long accountNumber, string name, string surname, double balance, double debit, TransactionList*& transactions) {
 		this->accountNumber = accountNumber;
 		this->name = name;
@@ -32,6 +28,10 @@ struct Account
 		this->debit = debit;
 		this->transactions = transactions;
 		nextA = 0;
+	}
+	
+	~Account() {
+		delete transactions;
 	}
 
 	void accountInfo() {
@@ -42,7 +42,6 @@ struct Account
 		transactions->showTransactions();
 		cout << endl;
 	}
-
 
 	void withdrawal() {
 		double amount;
@@ -143,10 +142,6 @@ struct Account
 		}
 	}
 
-	void deleteTransactionList() {
-		transactions->deleteList();
-	}
-
 	string getCurrentDate() {
 		//https://docs.microsoft.com/pl-pl/cpp/c-runtime-library/reference/localtime-s-localtime32-s-localtime64-s?view=vs-2019
 
@@ -175,7 +170,6 @@ struct Account
 		}
 		return year + "-" + month + "-" + day + "T" + hour + ":" + minute;
 	}
-
 
 	double roundAmount(double amount) {
 		return(floor(amount * 100) / 100);
