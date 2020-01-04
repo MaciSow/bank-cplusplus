@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 
-#include "Account.h"
 #include "AccountList.h"
 #include "RaportList.h"
 

@@ -148,12 +148,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="AccountList.cpp" />
     <ClCompile Include="Bank.cpp" />
+    <ClCompile Include="Raport.cpp" />
+    <ClCompile Include="RaportList.cpp" />
+    <ClCompile Include="Transaction.cpp" />
+    <ClCompile Include="TransactionList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
+    <ClInclude Include="Raport.h" />
     <ClInclude Include="RaportList.h" />
-    <ClInclude Include="Tests.h" />
+    <ClInclude Include="Transaction.h" />
     <ClInclude Include="AccountList.h" />
     <ClInclude Include="TransactionList.h" />
   </ItemGroup>

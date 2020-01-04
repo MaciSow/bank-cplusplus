@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Struct Name="Account">
-    <Position X="7.5" Y="0.5" Width="8" />
+    <Position X="6.25" Y="0.5" Width="8" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAABAYAABAAAAWCAAIAAEECAAACAEEAgAAgEA=</HashCode>
       <FileName>Account.h</FileName>
@@ -14,32 +14,32 @@
       <FileName>AccountList.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="RaportItem">
-    <Position X="10" Y="7" Width="5.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAQAAAAAAAAECAAAAAAAgAAAAAAAAQAAAAI=</HashCode>
-      <FileName>RaportList.h</FileName>
-    </TypeIdentifier>
-  </Struct>
   <Struct Name="RaportList">
-    <Position X="3.75" Y="7" Width="4.75" />
+    <Position X="3.5" Y="6.25" Width="4.75" />
     <TypeIdentifier>
       <HashCode>AIAAgwAAEAQAAAAAAACEQAAUAQAACAAICQAIAEAAAAA=</HashCode>
       <FileName>RaportList.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Transaction">
-    <Position X="22.5" Y="0.5" Width="3.25" />
-    <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAgAAACAAAAQAgAAA=</HashCode>
-      <FileName>TransactionList.h</FileName>
-    </TypeIdentifier>
-  </Struct>
   <Struct Name="TransactionList">
-    <Position X="17.25" Y="0.5" Width="4.75" />
+    <Position X="15" Y="0.5" Width="4.75" />
     <TypeIdentifier>
       <HashCode>ABAIACAQAgAAAAAIAAAAYAAAAEAACAAAAQAAAABAAQA=</HashCode>
       <FileName>TransactionList.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Raport">
+    <Position X="9.25" Y="6.25" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAECAAAAAAAgAAAAAAAAQAAAAI=</HashCode>
+      <FileName>Raport.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Transaction">
+    <Position X="20.5" Y="0.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAgAAACAAAAQAgAAA=</HashCode>
+      <FileName>Transaction.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Font Name="Segoe UI" Size="9" />
