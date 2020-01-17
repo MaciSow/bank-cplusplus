@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 
 				if (transaction != NULL)
 				{
-					account->transactions->deleteTransakcion(transaction);
+					account->transactions->deleteTransaction(transaction);
 				}
 			}
 			i = +3;

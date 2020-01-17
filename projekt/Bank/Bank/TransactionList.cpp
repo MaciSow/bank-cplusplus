@@ -56,7 +56,7 @@ Transaction* TransactionList::findTransaction(string date, double amount) {
 	return NULL;
 }
 
-void TransactionList::deleteTransakcion(Transaction* transaction) {
+void TransactionList::deleteTransaction(Transaction* transaction) {
 
 	// lista jednoelementowa
 	if (transaction->nextT == 0 && transaction == tHead) {

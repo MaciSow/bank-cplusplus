@@ -20,7 +20,7 @@ struct TransactionList
 
 	Transaction* findTransaction(string date, double amount);
 
-	void deleteTransakcion(Transaction* transaction);
+	void deleteTransaction(Transaction* transaction);
 
 	void showTransactions();
 
