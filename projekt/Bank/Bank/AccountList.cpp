@@ -1,3 +1,5 @@
+/** @file */
+
 #include "AccountList.h"
 
 AccountList::AccountList() {
@@ -105,8 +107,6 @@ void AccountList::saveData() {
 	ofstream File(fileName);
 	if (File.is_open())
 	{
-		//File << "Kotlet\n";
-		//File << "Schabowy\n";
 		Account* currentAccount = aHead;
 
 		while (currentAccount)

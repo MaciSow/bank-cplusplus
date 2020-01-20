@@ -1,3 +1,5 @@
+/** @file */
+
 #include "TransactionList.h"
 
 TransactionList::TransactionList() {
@@ -102,31 +104,17 @@ void TransactionList::deleteTransaction(Transaction* transaction) {
 }
 
 void TransactionList::showTransactions() {
-
-	// wskaznik na pierszy element listy
 	Transaction* temp = tHead;
 
-	// przewijamy wskazniki na nastepne elementy
 	while (temp)
 	{
 		cout << "\tdata: " << temp->date << " kwota: " << formatAmount(temp->amount) << endl;
 		temp = temp->nextT;
 	}
-
 }
 
 void TransactionList::showOneTransaction(Transaction* transasaction) {
 	cout << "\tdata: " << transasaction->date << " kwota: " << formatAmount(transasaction->amount) << endl;
-}
-
-void TransactionList::deleteList() {
-
-	while (tHead) {
-		Transaction* tmpTrans;
-		tmpTrans = tHead->nextT;
-		delete tHead;
-		tHead = tmpTrans;
-	}
 }
 
 string TransactionList::formatAmount(double amount) {
@@ -141,14 +129,12 @@ string TransactionList::formatAmount(double amount) {
 	return sign + stringAmount;
 }
 
-/* Bubble sort the given linked list */
 void TransactionList::dateSort()
 {
 	int swapped;
 	Transaction* ptr1;
 	Transaction* lptr = NULL;
 
-	/* Checking for empty list */
 	if (tHead == NULL) {
 		return;
 	}
@@ -171,7 +157,6 @@ void TransactionList::dateSort()
 	} while (swapped);
 }
 
-/* function to swap data of two nodes a and b*/
 void TransactionList::swap(Transaction* a, Transaction* b)
 {
 	string tmpDate = a->date;

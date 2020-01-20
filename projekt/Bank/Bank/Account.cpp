@@ -1,3 +1,5 @@
+/** @file */
+
 #include "Account.h"
 
 Account::Account(long long accountNumber, string name, string surname, double balance, double debit, TransactionList*& transactions) {

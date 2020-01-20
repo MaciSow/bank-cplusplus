@@ -1,3 +1,5 @@
+/** @file */
+
 #include "RaportList.h"
 
 RaportList::RaportList() {
