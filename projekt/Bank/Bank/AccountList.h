@@ -26,7 +26,7 @@ struct AccountList
 	*/
 	AccountList();
 
-	/** Dekonstruktor, usuwa listê kont wywo³any poleceniem delete.
+	/** Destruktor, usuwa listê kont wywo³any poleceniem delete.
 	 *@return usuniêta lista kont
 	*/
 	~AccountList();

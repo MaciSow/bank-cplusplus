@@ -21,7 +21,7 @@ struct TransactionList
 	*/
 	TransactionList();
 
-	/** Dekonstruktor, usuwa liste transakcji wywo³any poleceniem delete.
+	/** Destruktor, usuwa liste transakcji wywo³any poleceniem delete.
 	*/
 	~TransactionList();
 
@@ -46,18 +46,6 @@ struct TransactionList
 	/** Funkcja wyœwietla wszystkie transakcje z listy transakcji.
 	*/
 	void showTransactions();
-
-	/** Funkcja wyœwietla wybran¹ transakcjê z listy transakcji.
-	*@param transaction wskaŸnik na transakcjê
-	*/
-	void showOneTransaction(Transaction* transasaction);
-
-	/** Funkcja zwraca liczbê w odpowiednim formacie to znaczy:
-	ze znakiem "+" lub "-" i dok³adnoœci¹ do dwóch miejsc po przecinku.
-	*@param amount liczba do sformatowania
-	*@return odpowiednio sformatowana liczba jako ci¹g znaków
-	*/
-	string formatAmount(double amount);
 
 	/** Funkcja sortuje listê transakcji rosn¹co wed³ug daty metod¹ b¹belkow¹
 	*/

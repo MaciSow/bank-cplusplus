@@ -25,12 +25,7 @@ void Account::accountInfo() {
 	cout << endl;
 }
 
-void Account::withdrawal() {
-	double amount;
-
-	cout << "Kwota wyplaty: ";
-	cin >> amount;
-
+void Account::withdrawal(double amount) {
 	amount = roundAmount(amount);
 
 	if (amount <= 0) {
@@ -49,12 +44,7 @@ void Account::withdrawal() {
 	}
 }
 
-void Account::deposit() {
-	double amount;
-
-	cout << "Kwota wplaty: ";
-	cin >> amount;
-
+void Account::deposit(double amount) {
 	amount = roundAmount(amount);
 
 	if (amount <= 0) {
@@ -67,12 +57,7 @@ void Account::deposit() {
 	}
 }
 
-void Account::transfer(Account* receiver) {
-	double amount;
-
-	cout << "Kwota wyplaty: ";
-	cin >> amount;
-
+void Account::transfer(Account* receiver, double amount) {
 	amount = roundAmount(amount);
 
 	if (amount <= 0) {
@@ -94,14 +79,7 @@ void Account::transfer(Account* receiver) {
 	}
 }
 
-void Account::accountStatement() {
-	string startDate, stopDate;
-
-	cout << "Podaj date poczatkowa: ";
-	cin >> startDate;
-	cout << "Podaj date koncowa: ";
-	cin >> stopDate;
-
+void Account::accountStatement(string startDate, string stopDate) {
 	if (!checkDatesOrder(startDate, stopDate)) {
 		cout << "\nNiepoprawny zakres dat!!!\n";
 	}
@@ -114,7 +92,7 @@ void Account::accountStatement() {
 		{
 			if (checkDateInRange(tmp->date, startDate, stopDate)) {
 				(tmp->amount < 0) ? withdrawalSum += tmp->amount : depositSum += tmp->amount;
-				transactions->showOneTransaction(tmp);
+				tmp->showSignedTrans();
 			}
 			tmp = tmp->nextT;
 		}
@@ -125,8 +103,6 @@ void Account::accountStatement() {
 }
 
 string Account::getCurrentDate() {
-	//https://docs.microsoft.com/pl-pl/cpp/c-runtime-library/reference/localtime-s-localtime32-s-localtime64-s?view=vs-2019
-
 	struct tm newtime;
 	__time64_t long_time;
 	_time64(&long_time);
@@ -151,6 +127,18 @@ string Account::getCurrentDate() {
 		minute = "0" + minute;
 	}
 	return year + "-" + month + "-" + day + "T" + hour + ":" + minute;
+}
+
+string Account::formatBalance() {
+
+	string stringAmount;
+
+	string sign = balance > 0 ? "+" : "";
+
+	stringAmount = to_string(balance);
+	stringAmount = stringAmount.substr(0, stringAmount.find(".") + 3);
+
+	return sign + stringAmount;
 }
 
 double Account::roundAmount(double amount) {

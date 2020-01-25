@@ -35,7 +35,6 @@ void AccountList::addAccount(Account* account)
 }
 
 Account* AccountList::findAccount(long long accountNumber) {
-
 	Account* tmp = aHead;
 	while (tmp)
 	{
@@ -56,18 +55,16 @@ void AccountList::showAccounts() {
 		currentAccount->accountInfo();
 		currentAccount = currentAccount->nextA;
 	}
-
 }
 
 void AccountList::readData(string fileName) {
-
 	this->fileName = fileName;
 
 	ifstream File;
 	File.open(fileName, ios::in);
 
 	if (!File.is_open()) {
-		cout << "Nie ma pliku" << endl;
+		cout << "Nie znaleziono pliku " << fileName << endl;
 	}
 	else {
 		while (!File.eof())
@@ -114,14 +111,14 @@ void AccountList::saveData() {
 			File << currentAccount->accountNumber << " ";
 			File << currentAccount->name << " ";
 			File << currentAccount->surname << " ";
-			File << currentAccount->transactions->formatAmount(currentAccount->balance) << " ";
+			File << currentAccount->formatBalance() << " ";
 			File << currentAccount->debit << endl;
 
 			Transaction* temp = currentAccount->transactions->tHead;
 
 			while (temp)
 			{
-				File << temp->date << " " << currentAccount->transactions->formatAmount(temp->amount) << endl;
+				File << temp->date << " " << temp->formatAmount() << endl;
 				temp = temp->nextT;
 			}
 

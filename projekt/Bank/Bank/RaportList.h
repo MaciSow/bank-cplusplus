@@ -24,7 +24,7 @@ struct RaportList
 	*/
 	RaportList();
 
-	/** Dekonstruktor, usuwa listê raportu wywo³any poleceniem delete.
+	/** Destruktor, usuwa listê raportu wywo³any poleceniem delete.
 	*/
 	~RaportList();
 
@@ -42,15 +42,19 @@ struct RaportList
 	*/
 	void showRaportDebit();
 
-	/** Funkcja do obs³ugi raportu transakcji pyta o zakres dat i odnoœnik do sortowania (data, kwota transakcji, numer konta).
+	/** Funkcja do obs³ugi raportu transakcji.
 	*@param list wskaŸnik na listê kont
+	*@param startDate data otwieraj¹ca zakres
+	*@param stopDate data zamykaj¹ca zakres
+	*@param sortType odnoœnik do sortowania [(1)data, (2)kwota transakcji, (3)numer konta]
 	*/
-	void raportTransactions(AccountList* list);
+	void raportTransactions(AccountList* list, string startDate, string stopDate, int sortType);
 
 	/** Funkcja do obs³ugi raportu u¿ytkowników pyta o odnoœnik do sortowania (nazwisko, numer konta).
 	*@param list wskaŸnik na listê kont
+	*@param sortType odnoœnik do sortowania [(1)nazwisko, (2)numer konta]
 	*/
-	void raportDebitUsers(AccountList* list);
+	void raportDebitUsers(AccountList* list, int sortType);
 
 	/** Funkcja do obs³ugi sortowania raportu transakcji.
 	*@param sortType numer odnoœnika do sortowania

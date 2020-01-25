@@ -54,15 +54,8 @@ void RaportList::showRaportDebit() {
 	}
 }
 
-void RaportList::raportTransactions(AccountList* list) {
+void RaportList::raportTransactions(AccountList* list, string startDate, string stopDate, int sortType) {
 	Account* currentAccount = list->aHead;
-	string startDate, stopDate;
-
-
-	cout << "Podaj date poczatkowa: ";
-	cin >> startDate;
-	cout << "Podaj date koncowa: ";
-	cin >> stopDate;
 
 	if (!currentAccount->checkDatesOrder(startDate, stopDate)) {
 		cout << "\nNiepoprawny zakres dat!!!\n";
@@ -84,17 +77,12 @@ void RaportList::raportTransactions(AccountList* list) {
 		}
 		currentAccount = currentAccount->nextA;
 	}
-
-	int sortType;
-	cout << "Wybierz typ sortowania wedlug:\n"
-		<< "1 - daty\n" << "2 - kwot\n" << "3 - numerow kont\n";
-	cin >> sortType;
 	sortRaportTransaction(sortType);
 
 	showRaportTransaction();
 }
 
-void RaportList::raportDebitUsers(AccountList* list) {
+void RaportList::raportDebitUsers(AccountList* list, int sortType) {
 	Account* currentAccount = list->aHead;
 	while (currentAccount) {
 		if (currentAccount->balance < 0) {
@@ -103,10 +91,6 @@ void RaportList::raportDebitUsers(AccountList* list) {
 		currentAccount = currentAccount->nextA;
 	}
 
-	int sortType;
-	cout << "Wybierz typ sortowania wedlug:\n"
-		<< "1 - nazwisk\n" << "2 - numerow kont\n";
-	cin >> sortType;
 	sortRaportDebit(sortType);
 
 	showRaportDebit();
@@ -248,28 +232,20 @@ void RaportList::sortBySurname() {
 	} while (swapped);
 }
 
-void RaportList::swap(Raport* a, Raport* b)
-{
-	long long tmpAccountNumber = a->accountNumber;
-	a->accountNumber = b->accountNumber;
-	b->accountNumber = tmpAccountNumber;
+void RaportList::swap(Raport* a, Raport* b) {
 
-	string tmpSurname = a->surname;
-	a->surname = b->surname;
-	b->surname = tmpSurname;
+	Raport* nextA = a->nextR;
+	Raport* nextB = b->nextR;
+	Raport tmp = *a;
 
-	string tmpDate = a->date;
-	a->date = b->date;
-	b->date = tmpDate;
+	*a = *b;
+	*b = tmp;
 
-	double tmpAmount = a->amount;
-	a->amount = b->amount;
-	b->amount = tmpAmount;
-
+	a->nextR = nextA;
+	b->nextR = nextB;
 }
 
 string RaportList::formatAmount(double amount) {
-
 	amount = (floor(amount * 100) / 100);
 
 	string stringAmount;

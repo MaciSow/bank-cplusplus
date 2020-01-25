@@ -35,36 +35,47 @@ struct Account
 	*/
 	Account(long long accountNumber, string name, string surname, double balance, double debit, TransactionList*& transactions);
 
-	/** Dekonstruktor, usuwa konto wywo³any poleceniem delete.
+	/** Destruktor, usuwa konto wywo³any poleceniem delete.
 	*/
 	~Account();
 
 	/** Funkcja wyœwietla informacje o koncie wraz z wyci¹giem transakcji.
 	*/
 	void accountInfo();
-	
-	/** Funkcja pyta o kwotê i wyp³aca j¹ z konta o ile na to pozwalaj¹ œrodki posiadane przez danego u¿ytkownika.
-	*/
-	void withdrawal();
 
-	/** Funkcja pyta o kwotê i wp³aca j¹ na konto danego u¿ytkownika.
+	/** Funkcja wyp³aca kwotê z konta o ile pozwalaj¹ na to œrodki posiadane przez danego u¿ytkownika.
+	*@param amount kwota do wyp³aty
 	*/
-	void deposit();
+	void withdrawal(double amount);
 
-	/** Funkcja pyta o kwotê i przelewa j¹ na konto odbiorcy, o ile pozwalaj¹ na to œrodki danego u¿ytkownika.
-	*@param wskaŸnik na konto odbiorcy.
+	/** Funkcja wp³aca kwotê na konto danego u¿ytkownika.
+	*@param amount kwota do wp³aty
 	*/
-	void transfer(Account* receiver);
+	void deposit(double amount);
 
-	/** Funkcja pyta o przedzia³ dat i wyœwietla wyci¹g z podsumowaniem danego konta 
-	posortowany wed³ug daty z podanego przedzia³u.
+	/** Funkcja przelewa kwotê na konto odbiorcy, o ile pozwalaj¹ na to œrodki danego u¿ytkownika.
+	*@param receiver wskaŸnik na konto odbiorcy
+	*@param amount kwota przelewu
 	*/
-	void accountStatement();
+	void transfer(Account* receiver, double amount);
+
+	/** Funkcja wyœwietla wyci¹g z podsumowaniem danego konta posortowany wed³ug daty z podanego przedzia³u.
+	*@param startDate data otwieraj¹ca zakres
+	*@param stopDate data zamykaj¹ca zakres
+	*/
+	void accountStatement(string startDate, string stopDate);
 
 	/** Funkcja pobiera z systemu aktualn¹ datê w sposób polecany przez stronê Micorsoft.
 	*@return aktualna data wraz z godzin¹ w formacie ISO 8601 (YYYY-MM-DDThh:mm)
 	*/
 	string getCurrentDate();
+
+	/** Funkcja zwraca liczbê w odpowiednim formacie to znaczy:
+	ze znakiem "+" lub "-" i dok³adnoœci¹ do dwóch miejsc po przecinku.
+	*@param amount liczba do sformatowania
+	*@return odpowiednio sformatowana liczba jako ci¹g znaków
+	*/
+	string formatBalance();
 
 	/** Funkcja zaokr¹gla podan¹ liczbê w dó³ do dwóch miejsc po przecinku.
 	*@param amount liczba do zaokr¹glenia w formacie double

@@ -59,22 +59,18 @@ Transaction* TransactionList::findTransaction(string date, double amount) {
 }
 
 void TransactionList::deleteTransaction(Transaction* transaction) {
-
-	// lista jednoelementowa
 	if (transaction->nextT == 0 && transaction == tHead) {
 		tHead = 0;
 		delete transaction;
 		return;
 	}
 
-	// jeœli jest pierwszym elementem na liœcie
 	if (transaction == tHead) {
 		tHead = transaction->nextT;
 		delete transaction;
 		return;
 	}
 
-	// jeœli jest ostatnim elementem na liœcie
 	if (transaction->nextT == 0) {
 		Transaction* tmp = tHead;
 
@@ -100,7 +96,6 @@ void TransactionList::deleteTransaction(Transaction* transaction) {
 		}
 		tmp = tmp->nextT;
 	}
-
 }
 
 void TransactionList::showTransactions() {
@@ -108,25 +103,9 @@ void TransactionList::showTransactions() {
 
 	while (temp)
 	{
-		cout << "\tdata: " << temp->date << " kwota: " << formatAmount(temp->amount) << endl;
+		temp->showSignedTrans();
 		temp = temp->nextT;
 	}
-}
-
-void TransactionList::showOneTransaction(Transaction* transasaction) {
-	cout << "\tdata: " << transasaction->date << " kwota: " << formatAmount(transasaction->amount) << endl;
-}
-
-string TransactionList::formatAmount(double amount) {
-
-	string stringAmount;
-
-	string sign = amount > 0 ? "+" : "";
-
-	stringAmount = to_string(amount);
-	stringAmount = stringAmount.substr(0, stringAmount.find(".") + 3);
-
-	return sign + stringAmount;
 }
 
 void TransactionList::dateSort()
@@ -159,13 +138,15 @@ void TransactionList::dateSort()
 
 void TransactionList::swap(Transaction* a, Transaction* b)
 {
-	string tmpDate = a->date;
-	a->date = b->date;
-	b->date = tmpDate;
+		Transaction* nextA = a->nextT;
+		Transaction* nextB = b->nextT;
+		Transaction tmp = *a;
 
-	double tmpAmount = a->amount;
-	a->amount = b->amount;
-	b->amount = tmpAmount;
+		*a = *b;
+		*b = tmp;
+
+		a->nextT = nextA;
+		b->nextT = nextB;
 }
 
 bool TransactionList::checkDatesOrder(string youngDate, string oldDate) {
